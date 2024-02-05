@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import userRouter from './routes/userRoutes.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -12,6 +13,12 @@ mongoose.connect(db).then(() => {
 });
 
 const app = express();
+
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 //convert data to json inside the req.body
 app.use(express.json());
