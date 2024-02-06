@@ -96,7 +96,7 @@ const BusinessinfoScreen = () => {
 
     try {
       const response = await fetch(
-        'http://172.20.10.3:8000/api/businesses/business',
+        'http://172.20.10.3:4000/api/businesses/business',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

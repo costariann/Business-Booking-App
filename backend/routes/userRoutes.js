@@ -6,6 +6,19 @@ import { generateToken } from '../utils.js';
 
 const userRouter = express.Router();
 
+userRouter.get(
+  '/user',
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.find({});
+
+    if (user) {
+      res.send(user);
+    } else {
+      res.send({ message: 'No user found' });
+    }
+  })
+);
+
 userRouter.post(
   '/signin',
   expressAsyncHandler(async (req, res) => {

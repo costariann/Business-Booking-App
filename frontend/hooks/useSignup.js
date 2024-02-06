@@ -13,7 +13,7 @@ export const useSignup = () => {
     setError(false);
 
     try {
-      const response = await fetch('http://172.20.10.3:8000/api/users/signup', {
+      const response = await fetch('http://172.20.10.3:4000/api/users/signup', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
