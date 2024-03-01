@@ -12,6 +12,7 @@ import IndustrySelect from '../components/IndustrySelect';
 import CountrySelect from '../components/CountrySelect';
 import { Divider } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -115,6 +116,7 @@ const BusinessinfoScreen = () => {
       if (response.ok) {
         const data = await response.json();
         dispatch({ type: 'FETCH_SUCCESS', payload: { businessinfo: data } });
+        await AsyncStorage.setItem('businessinfocompleted', 'true');
         navigation.navigate('OverviewScreen');
       } else {
         const errorData = await response.json();
@@ -146,6 +148,13 @@ const BusinessinfoScreen = () => {
         <View>
           <View style={{ alignItems: 'center' }}>
             <Text style={styles.text}>Business Info</Text>
+          </View>
+          <View style={styles.businessinfo}>
+            <SimpleLineIcons name="info" size={20} color="#808080" />
+            <Text style={{ color: '#808080', fontSize: 15 }}>
+              {'  '}
+              Provide business details in this section
+            </Text>
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Name</Text>
@@ -234,7 +243,7 @@ const BusinessinfoScreen = () => {
               onChangeText={(text) => setDescription(text)}
             />
           </View>
-          <View style={{ marginTop: 200 }}>
+          <View style={{ marginTop: 120 }}>
             <View style={{ marginBottom: 20 }}>
               <Divider />
             </View>

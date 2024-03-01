@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -11,6 +11,7 @@ import {
 import { useSignin } from '../hooks/useSignin';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const logo = require('frontend/assets/images/undraw_Sign_up_n6im.png');
 
@@ -41,10 +42,18 @@ const SigninScreen = () => {
       await signin(email, password);
 
       if (!error && isAuthenticated) {
-        navigation.replace('BusinessinfoScreen');
+        const businessInfoFlag = await AsyncStorage.getItem(
+          'businessinfocompleted'
+        );
 
-        setEmail('');
-        setPassword('');
+        if (businessInfoFlag === 'true') {
+          navigation.replace('OverviewScreen');
+        } else {
+          navigation.replace('BusinessinfoScreen');
+
+          setEmail('');
+          setPassword('');
+        }
       }
     } catch (error) {
       [console.error('Invalid email or password', error)];

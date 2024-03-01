@@ -10,6 +10,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthContextProvider } from './context/AuthContext';
 import BusinessinfoScreen from './screens/BusinessinfoScreen';
 import OverviewScreen from './screens/OverviewScreen';
+import Booking from './screens/Booking';
+import Service from './screens/Service';
+import Profile from './screens/Profile';
 
 const Loading = () => {
   return (
@@ -24,6 +27,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [viewedOnboarding, setViewedOnboarding] = useState(false);
+  const [viewedBusinessScreen, setViewedBusinessScreen] = useState(false);
 
   const checkOnboarding = async () => {
     try {
@@ -31,6 +35,13 @@ export default function App() {
 
       if (value !== null) {
         setViewedOnboarding(true);
+      }
+
+      const businessInfoFlag = await AsyncStorage.getItem(
+        'businessinfocompleted'
+      );
+      if (businessInfoFlag === 'true') {
+        setViewedBusinessScreen(true);
       }
     } catch (err) {
       console.log('Error user', err);
@@ -63,6 +74,9 @@ export default function App() {
             component={BusinessinfoScreen}
           />
           <Stack.Screen name="OverviewScreen" component={OverviewScreen} />
+          <Stack.Screen name="Booking" component={Booking} />
+          <Stack.Screen name="Service" component={Service} />
+          <Stack.Screen name="Profile" component={Profile} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContextProvider>
